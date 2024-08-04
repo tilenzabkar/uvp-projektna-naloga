@@ -58,7 +58,8 @@ def izlusci_vrhove(directory):
                     print(f"Višina pri gori {gora} ni najdena.")
 
                 #izluščimo geografsko širino in dolžino, nekateri tega 
-                vzorec_sirina_dolzina = r'<div class="g2"><table><tr><td><b>Širina/Dolžina:</b>&nbsp;</td><td><span id="kf0">(?P<širina>.+?)&nbsp;(?P<dolžina>.+?)</span></td>.+?</tr></table></div>'
+                vzorec_sirina_dolzina = (r'<div class="g2"><table><tr><td><b>Širina/Dolžina:</b>&nbsp;</td><td><span id="kf0">(?P<širina>.+?)'
+                                         r'&nbsp;(?P<dolžina>.+?)</span></td>.+?</tr></table></div>')
                 najdba_sirina_dolzina = re.search(vzorec_sirina_dolzina, vsebina)
                 if najdba_sirina_dolzina:
                     slovar_podatkov["širina/dolžina"] = najdba_sirina_dolzina.group("širina") + " " + najdba_sirina_dolzina.group("dolžina")   
@@ -114,7 +115,6 @@ def izlusci_vrhove(directory):
                     print(f"Število poti pri gori {gora} ni bilo najdeno.")
 
                 #izluščimo število GPS sledi
-
                 vzorec_gps = r'<div class="g2"><b>Število GPS sledi:</b> <a class="moder" href="/gps.asp" title="GPS sledi">(.+?)</a></div>'
                 najdba_gps = re.search(vzorec_gps, vsebina)
                 if najdba_gps:
@@ -124,7 +124,6 @@ def izlusci_vrhove(directory):
                     print(f"Število GPS poti pri gori {gora} ni bilo najdeno.")
                 
                 #izluščimo opis
-
                 vzorec_opis = r'<div style="padding-top:10px;"><b>Opis.*?:</b><br />(.+?)</div>'
                 najdba_opis = re.search(vzorec_opis, vsebina, flags=re.DOTALL)
                 if najdba_opis:
@@ -133,16 +132,14 @@ def izlusci_vrhove(directory):
                     slovar_podatkov["opis"] = None
                     print(f"Opis pri gori {gora} ni bil najdeno.")
 
-                sez_podatkov.append(slovar_podatkov)
-
                 #izluščimo gore v okolici 2km
-
                 vzorec_okolica = r'<div id="radiusseznam1">(.+?)</div>'
                 najdba_okolica = re.search(vzorec_okolica, vsebina, flags=re.DOTALL)
                 seznam_okoliskih_gor = []
                 if najdba_okolica:
-                    for okoliska_gora in re.finditer(r'<a class="moder" href=".+?">(.+?) \(\d+?m\)</a>', najdba_okolica.group(1), flags=re.DOTALL):
-                        seznam_okoliskih_gor.append(okoliska_gora.group(1))
+                    for okoliska_gora in re.finditer(r'<a class="moder" href="/gora/.+?/(\d+/\d+)">.+? \(\d+?m\)</a>', najdba_okolica.group(1), flags=re.DOTALL):
+                        id = okoliska_gora.group(1).replace("/", "0")
+                        seznam_okoliskih_gor.append(id)
                     if len(seznam_okoliskih_gor) != 0:
                         slovar_podatkov["gore v okolici 2km"] = seznam_okoliskih_gor
                     else:
@@ -152,21 +149,17 @@ def izlusci_vrhove(directory):
                     #print(f"Gore v okolici gore {gora} niso bile najdene.")
 
                 #izluščimo začetne točke poti, čas hoje in zahtevnost
-
-                vzorec_poti = r'<tr class="trG\d"><td class="tdG"><a href=".+?">(.+?) - .+?</a></td><td class="tdG"><a href=".+?"> ?(.+?)</a></td><td class="tdG"><a href=".+?">(.+?)</a></td></tr>'
+                vzorec_poti = (r'<tr class="trG\d"><td class="tdG"><a href=".+?"> ?(.+?) [-\(].+?</a></td><td class="tdG"><a href=".+?">'
+                                r' ?(.+?)</a></td><td class="tdG"><a href=".+?">(.+?)</a></td></tr>')
                 najdba_poti = re.findall(vzorec_poti, vsebina)
                 if najdba_poti:
                     slovar_podatkov["poti"] = najdba_poti
                 else:
                     slovar_podatkov["poti"] = None
                     #print(f"Pri gori {gora} ni bilo najdenih poti.")
-                
+
+                sez_podatkov.append(slovar_podatkov)
     return sez_podatkov
-        #izluščimo gore v okolici
-
-        #izluščimo opis
-
-        #izluščimo poti, potreben čas in zahtevnost
 
 #print(sorted(izlusci_vrhove(hribi_directory), key=lambda x: int(x["lestvica priljubljenosti"][:-1])))
-print(izlusci_vrhove(hribi_directory))
+#izlusci_vrhove(hribi_directory)

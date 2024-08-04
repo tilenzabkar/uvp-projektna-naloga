@@ -34,9 +34,9 @@ def save_page(url, directory, filename):
     """
     text = text_from_url(url)
     save_string_to_file(text, directory, filename)
-    print(f"Uspešno shranil {directory}/{filename}")
+    print(f"Uspešno shranil {directory}\\{filename}")
 
-save_page(hribi_frontpage_url, hribi_directory, hribi_frontpage_filename) #shranimo vsebino spletne strani
+#save_page(hribi_frontpage_url, hribi_directory, hribi_frontpage_filename) #shranimo vsebino spletne strani
 
 def text_from_file(directory, filename):
     """Funkcija vrne besedilo iz datoteke "filename" v direktoriju "directory"."""
@@ -60,7 +60,7 @@ def shrani_gorovja_iz_html(directory, filename):
         link = 'https://hribi.net/gorovje' + povezava
         save_page(link, pot, ime_html)
 
-shrani_gorovja_iz_html(hribi_directory, hribi_frontpage_filename) #shranimo spletne strani vseh gorovij
+#shrani_gorovja_iz_html(hribi_directory, hribi_frontpage_filename) #shranimo spletne strani vseh gorovij
 
 def izlusci_goro_iz_html(directory, filename):
     """Funkcija izlušči povezave do posameznih gor iz html datoteke "filename", ki se nahaja v direktoriju "directory". Vrne seznam povezav do nadaljnih spletnih strani
@@ -69,7 +69,7 @@ def izlusci_goro_iz_html(directory, filename):
     return re.findall(vzorec, text_from_file(directory, filename))
 
 def shrani_goro_iz_html(directory, filename):
-    """Funkcija s pomočjo funkcije izlusci_goro_iz_html shrani html vsebino vsake posamezne gore v datoteko z naslovom gora{id}S.html."""
+    """Funkcija s pomočjo funkcije izlusci_goro_iz_html shrani html vsebino vsake posamezne gore v datoteko z naslovom gora{id}.html."""
     mnozica_id = set()
     for povezava in izlusci_goro_iz_html(directory, filename):
         id = re.search(r'\d+/\d+', povezava).group(0).replace("/", "0") #vsaka gora je določena z vzorcem števke/števke, da dobimo id le zamenjamo / z 0 
@@ -89,5 +89,9 @@ def shrani_vse_vrhove(direktorij):
             for datoteka in os.listdir(pot):
                 shrani_goro_iz_html(pot, datoteka)
 
-shrani_vse_vrhove(hribi_directory)
+#shrani_vse_vrhove(hribi_directory)
 
+def zajemi_vse(directory):
+    save_page(hribi_frontpage_url, directory, hribi_frontpage_filename)
+    shrani_gorovja_iz_html(directory, hribi_frontpage_filename)
+    shrani_vse_vrhove(directory)
