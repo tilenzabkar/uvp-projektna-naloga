@@ -1,5 +1,6 @@
 import csv
 
+
 def shrani(sez_podatkov):
     with open("gore.csv", "w", encoding="utf8") as dat:
         pisatelj = csv.writer(dat)
@@ -7,6 +8,7 @@ def shrani(sez_podatkov):
             [
                 "id",
                 "ime",
+                "država",
                 "gorovje",
                 "višina",
                 "geografska širina, dolžina",
@@ -26,6 +28,7 @@ def shrani(sez_podatkov):
                 [
                     podatek["id"],
                     podatek["ime"],
+                    podatek["država"],
                     podatek["gorovje"],
                     podatek["višina"],
                     podatek["širina/dolžina"],
@@ -47,7 +50,6 @@ def shrani(sez_podatkov):
             if podatek["gore v okolici 2km"]:
                 for gora in podatek["gore v okolici 2km"]:
                     pisatelj.writerow([podatek["id"], gora])
-
 
     with open("gore_poti.csv", "w", encoding="utf8") as dat:
         pisatelj = csv.writer(dat)

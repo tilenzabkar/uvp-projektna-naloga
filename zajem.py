@@ -1,24 +1,33 @@
 import os
 import requests 
 import re
+import izlusci
 
-hribi_url = 'https://www.hribi.net'
-hribi_frontpage_url = 'https://www.hribi.net/gorovja'
+hribi_glavni_url = r'https://www.hribi.net/iskalnik_izletov'
+hribi_url = (r'https://www.hribi.net/iskalnik_izletov/rezultat_iskanja?drzavaid=1&gorovjeid=&'
+                r'goraime=&VisinaMIN=&VisinaMAX=&CasMIN=&CasMAX=&izhodisce=&izhodisceMIN=&'
+                r'izhodisceMAX=&VisinskaRazlikaMIN=&VisinskaRazlikaMAX=&zahtevnostid=&'
+                r'zahtevnostferrataid=&IzhodisceMinOddaljenost=&IzhodisceMAXOddaljenost=&'
+                r'GoraMinOddaljenost=&GoraMaxOddaljenost=&mojaSirina=0&mojaDolzina=0')
 hribi_directory = 'podatki'
 hribi_frontpage_filename = 'gorovja.html'
 
-def text_from_url(url):
+
+def besedilo_iz_url(url):
     """Funkcija sprejme url spletne strani in poskusi vrniti vsebino spletne
-    strani kot niz, v primeru napake vrne None.
+    strani kot niz, v primeru napake ali preusmeritve vrne None.
     """
     try:
-        page_content = requests.get(url)
+        page_content = requests.get(url, allow_redirects=False)
+        if page_content.status_code == 302: #gorovja nekaterih držav so bila premaknjena
+            return None
     except requests.exceptions.RequestException:
         print("Spletna stran ni dosegljiva.")
         return None
     return page_content.text #samo besedilo
 
-def save_string_to_file(text, directory, file):
+
+def shrani_besedilo_v_datoteko(text, directory, file):
     """Funkcija zapiše vrednost niza "text" v novo datoteko, ki se nahaja
     v "directory/filename", ali pa povozi obstoječo. V primeru, da je niz
     "directory" prazen, naredi datoteko v trenutni mapi.
@@ -28,70 +37,59 @@ def save_string_to_file(text, directory, file):
     with open(path, 'w', encoding="utf8") as f:
         f.write(text)
 
-def save_page(url, directory, filename):
+
+def shrani_stran(url, directory, filename):
     """Funkcija shrani vsebino spletne strani iz "url" v datoteko "filename" v direktoriju
     "directory".
     """
-    text = text_from_url(url)
-    save_string_to_file(text, directory, filename)
-    print(f"Uspešno shranil {directory}\\{filename}")
+    text = besedilo_iz_url(url)
+    if text is not None:
+        shrani_besedilo_v_datoteko(text, directory, filename)
+        print(f"Uspešno shranil {directory}\\{filename}")
 
-#save_page(hribi_frontpage_url, hribi_directory, hribi_frontpage_filename) #shranimo vsebino spletne strani
 
-def text_from_file(directory, filename):
+def besedilo_iz_datoteke(directory, filename):
     """Funkcija vrne besedilo iz datoteke "filename" v direktoriju "directory"."""
     path = os.path.join(directory, filename)
     with open(path, encoding="utf8") as f:
         text = f.read()
     return text
 
-def izlusci_gorovja_iz_html(directory, filename):
-    """Funkcija izlušči povezave do gorovij iz html datoteke "filename", po vzorcu iz hribi.net. Vrne seznam naborov oblike (povezava_do_gorovja, ime_gorovja)"""
-    vzorec = r'<div class="vr\d"><a href="/gorovje(?P<link_gorovja>.*?)">(?P<ime_gorovja>.*?)</a></div>'
-    return re.findall(vzorec, text_from_file(directory, filename))
 
-def shrani_gorovja_iz_html(directory, filename):
-    """Funkcija shrani html vsebino gorovij v direktorije, ki imajo ime po gorovju, znotraj glavnega direktorija."""
-    for povezava, ime in izlusci_gorovja_iz_html(directory, filename):
-        nov_direktorij = ime.lower().replace(",", "").replace(" ", "_")
-        pot = os.path.join(directory, nov_direktorij)
-        os.makedirs(pot, exist_ok=True) 
-        ime_html = nov_direktorij + ".html"
-        link = 'https://hribi.net/gorovje' + povezava
-        save_page(link, pot, ime_html)
+def shrani_vse_drzave(directory, sez_id_in_imen_drzav):
+    """Funkcija shrani vsa gorovja vseh držav v direktorij "directory". Sprejme tudi seznam podatkov o državah, da ga ni potrebno večkrat računati."""
+    for id, ime in sez_id_in_imen_drzav:
+        ime_datoteke = ime.lower().replace(" ", "_") + ".html"
+        shrani_stran((f'https://www.hribi.net/iskalnik_izletov/rezultat_iskanja?drzavaid={id}&gorovjeid=&'
+                       'goraime=&VisinaMIN=&VisinaMAX=&CasMIN=&CasMAX=&izhodisce=&izhodisceMIN=&izhodisceMAX=&'
+                       'VisinskaRazlikaMIN=&VisinskaRazlikaMAX=&zahtevnostid=&zahtevnostferrataid=&IzhodisceMinOddaljenost=&'
+                       'IzhodisceMAXOddaljenost=&GoraMinOddaljenost=&GoraMaxOddaljenost=&mojaSirina=0&mojaDolzina=0'), directory, ime_datoteke)
 
-#shrani_gorovja_iz_html(hribi_directory, hribi_frontpage_filename) #shranimo spletne strani vseh gorovij
 
-def izlusci_goro_iz_html(directory, filename):
-    """Funkcija izlušči povezave do posameznih gor iz html datoteke "filename", ki se nahaja v direktoriju "directory". Vrne seznam povezav do nadaljnih spletnih strani
-    posameznih vrhov."""
-    vzorec = r'<tr class="vr\d"><td class="vrtd.*?"><a href="(?P<link_gore>.*?)">.*?</a></td>'
-    return re.findall(vzorec, text_from_file(directory, filename))
-
-def shrani_goro_iz_html(directory, filename):
-    """Funkcija s pomočjo funkcije izlusci_goro_iz_html shrani html vsebino vsake posamezne gore v datoteko z naslovom gora{id}.html."""
-    mnozica_id = set()
-    for povezava in izlusci_goro_iz_html(directory, filename):
-        id = re.search(r'\d+/\d+', povezava).group(0).replace("/", "0") #vsaka gora je določena z vzorcem števke/števke, da dobimo id le zamenjamo / z 0 
-        if id in mnozica_id:
-            print("Podvojen id, napaka.")
-            break
-        mnozica_id.add(id)
+def shrani_goro_iz_html(filename):
+    """Funkcija ustvari direktorij "gore" znotraj direktorija "podatki" in vanj shrani vse gore v obliki gora{id}.html"""
+    direktorij_za_gore = 'gore'
+    pot = os.path.join(hribi_directory, direktorij_za_gore)
+    os.makedirs(pot, exist_ok=True)
+    for povezava in izlusci.izlusci_gore(hribi_directory, filename):
+        id = re.search(r'\d+/\d+', povezava).group(0).replace("/", "0")     #vsaka gora je določena z vzorcem števke/števke, da dobimo id le zamenjamo / z 0
         link = 'https://www.hribi.net' + povezava
         ime_datoteke = "gora" + id + ".html"
-        save_page(link, directory, ime_datoteke)
+        shrani_stran(link, pot, ime_datoteke)
 
-def shrani_vse_vrhove(direktorij):
-    """Funkcija shrani vse spletne strani posameznih vrhov iz direktorijev znotraj glavnega direktorija."""         
-    for direktorij_znotraj in os.listdir(direktorij):
-        pot = os.path.join(hribi_directory, direktorij_znotraj)
-        if os.path.isdir(pot): #zanimajo nas le direktoriji
-            for datoteka in os.listdir(pot):
-                shrani_goro_iz_html(pot, datoteka)
 
-#shrani_vse_vrhove(hribi_directory)
+def shrani_vse_gore(sez_id_in_imen_drzav):
+    for id, ime in sez_id_in_imen_drzav:
+        ime_datoteke = ime.lower().replace(" ", "_") + ".html"
+        try:
+            shrani_goro_iz_html(ime_datoteke)
+        except FileNotFoundError:       #smo poskusili najti datoteko, za katero spletna stran ne obstaja in je zato nismo shranili
+            print(f"Ni na voljo datoteke {ime_datoteke}.")
+            continue
 
-def zajemi_vse(directory):
-    save_page(hribi_frontpage_url, directory, hribi_frontpage_filename)
-    shrani_gorovja_iz_html(directory, hribi_frontpage_filename)
-    shrani_vse_vrhove(directory)
+
+def zajemi_vse():
+    shrani_stran(hribi_glavni_url, hribi_directory, "glavni.html")
+    sez_id_in_imen_drzav = izlusci.izlusci_id_drzav(hribi_directory, "glavni.html")
+    shrani_vse_drzave(hribi_directory, sez_id_in_imen_drzav)
+    shrani_vse_gore(sez_id_in_imen_drzav)
