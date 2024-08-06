@@ -59,7 +59,7 @@ def izlusci_vrhove(directory):
         vzorec_drzave = r'<div class="g2"><b>Država:</b> (<a class="moder" href=".+?">.+?</a>)+?</div>'
         najdba_drzave = re.search(vzorec_drzave, vsebina, flags=re.DOTALL)
         if najdba_drzave is not None:
-            for drzava in re.finditer(r'">(\w+?)</a>', najdba_drzave.group(1), flags=re.DOTALL):
+            for drzava in re.finditer(r'">(.+?)</a>', najdba_drzave.group(1), flags=re.DOTALL):
                 sez_drzav.append(drzava.group(1))
             slovar_podatkov["država"] = ", ".join(sez_drzav)
         else:
