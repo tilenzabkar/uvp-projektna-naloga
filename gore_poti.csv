@@ -1132,6 +1132,7 @@ id,začetna točka,čas,zahtevnost
 104023,Drežniške Ravne,45 min,zahtevna označena pot
 10403,Kobarid,25 min,lahka označena pot
 10404,Kobarid,20 min,lahka označena pot
+104041,Drežniške Ravne,1 h 10 min,lahka označena pot
 10405,Čezsoča,1 h 20 min,lahka označena pot
 10406,Čezsoča,1 h 45 min,zahtevna neoznačena steza
 10407,Zadnjica,20 min,lahka neoznačena steza
@@ -2149,8 +2150,8 @@ id,začetna točka,čas,zahtevnost
 1102979,Podolševa,1 h 55 min,zahtevna označena pot
 1102979,Zadnji travnik,2 h 15 min,lahka označena pot
 1102979,Podolševa,2 h 15 min,zahtevna označena pot
-1102979,Podolševa,2 h 10 min,zahtevna označena pot
 1102979,Spodnje Sleme,3 h 30 min,zahtevna označena pot
+1102979,Podolševa,2 h 10 min,zahtevna označena pot
 110298,Pod Krnico,20 min,lahka označena pot
 110298,Medvodje,2 h 15 min,lahka označena pot
 110298,Matizovec,4 h 50 min,lahka označena pot
@@ -2596,8 +2597,8 @@ id,začetna točka,čas,zahtevnost
 110592,Poštarski dom pod Plešivcem,2 h 45 min,lahka označena pot
 110592,Andrejev dom na Slemenu,2 h 45 min,lahka označena pot
 110592,Ivarčko jezero,2 h 50 min,lahka neoznačena steza
-110592,Ivarčko jezero,3 h,lahka označena pot
 110592,Ciganija,2 h 15 min,lahka označena pot
+110592,Ivarčko jezero,3 h,lahka označena pot
 110592,Žerjav,3 h 15 min,lahka označena pot
 110592,Mežica,5 h 30 min,lahka označena pot
 110592,Leše,4 h 25 min,lahka označena pot
@@ -2822,8 +2823,8 @@ id,začetna točka,čas,zahtevnost
 13203685,MP Čepinci,10 min,lahka označena pot
 13203685,Andovci / Orfalu,45 min,lahka označena pot
 13203765,Monošter / Szentgotthárd,1 h 25 min,lahka označena pot
-13203765,Jezero Haršaš / Hársas tó,40 min,lahka označena pot
 13203765,Monošter / Szentgotthárd,1 h 15 min,lahka označena pot
+13203765,Jezero Haršaš / Hársas tó,40 min,lahka označena pot
 13203766,Jezero Haršaš / Hársas tó,1 h,lahka označena pot
 13203766,Monošter / Szentgotthárd,25 min,lahka označena pot
 13203817,Hegyesd,20 min,delno zahtevna označena pot
@@ -2902,8 +2903,8 @@ id,začetna točka,čas,zahtevnost
 13803663,TV Neuhaus am Klausenbach,2 h 45 min,delno zahtevna označena pot
 13803663,Dobra / Neuhaus am Klausenbach,2 h 30 min,delno zahtevna označena pot
 13803663,Lahmbach,55 min,delno zahtevna označena pot
-13803664,Schloss Kapfenstein,10 min,lahka označena pot
 13803664,OMP Kuzma,3 h 30 min,delno zahtevna označena pot
+13803664,Schloss Kapfenstein,10 min,lahka označena pot
 13803664,Schloss Kapfenstein,10 min,lahka označena pot
 13803664,Lahmbach,55 min,delno zahtevna označena pot
 13803664,Dobra / Neuhaus am Klausenbach,2 h 30 min,delno zahtevna označena pot
@@ -3054,6 +3055,7 @@ id,začetna točka,čas,zahtevnost
 13803996,Pension Camping Holzmeister,1 h 50 min,lahka označena pot
 13803996,Teichalm,3 h 45 min,lahka označena pot
 13804027,Zeller Kreuz,2 h 30 min,lahka označena pot
+13804027,Schanzsattel,2 h,lahka označena pot
 13804028,Zeller Kreuz,2 h 50 min,lahka označena pot
 13804029,Zeller Kreuz,3 h,lahka označena pot
 14102413,Jelašca,3 h,delno zahtevna označena pot
@@ -3537,8 +3539,8 @@ id,začetna točka,čas,zahtevnost
 16303684,Budinci,3 h 30 min,lahka označena pot
 16303925,Grad,2 h 15 min,lahka neoznačena steza
 16303964,MP Hodoš,2 h,lahka označena pot
-16303964,Mladinski dom Hodoš,1 h 15 min,lahka označena pot
 16303964,Budinci,1 h 40 min,lahka označena pot
+16303964,Mladinski dom Hodoš,1 h 15 min,lahka označena pot
 16303964,Hodoš,50 min,lahka neoznačena steza
 16303967,Hodoš,1 h 15 min,lahka označena pot
 1668011,Smrečje,2 h 45 min,lahka neoznačena steza
@@ -4653,6 +4655,7 @@ id,začetna točka,čas,zahtevnost
 2503920,Olimje,1 h 35 min,lahka označena pot
 2503920,Slake,1 h 25 min,lahka označena pot
 2503920,Slake,1 h 25 min,lahka označena pot
+2503920,Spodnje Tinsko,1 h 20 min,lahka označena pot
 2503921,Podčetrtek,20 min,lahka označena pot
 2503931,Brinte Sele,1 h 10 min,zelo zahtevna neoznačena steza
 2504001,Olimje,1 h 20 min,lahka neoznačena steza
@@ -5652,8 +5655,8 @@ id,začetna točka,čas,zahtevnost
 260798,Lohača,1 h 15 min,lahka neoznačena steza
 260798,Planina,45 min,lahka neoznačena steza
 260798,Planina,45 min,lahka neoznačena steza
-260798,Grčarevec,2 h,lahka označena pot
 260798,Grčarevec,2 h 10 min,lahka označena pot
+260798,Grčarevec,2 h,lahka označena pot
 260799,Planina,50 min,lahka neoznačena steza
 260799,Lohača,1 h,lahka neoznačena steza
 260799,Planina,55 min,lahka neoznačena steza
@@ -6059,6 +6062,7 @@ id,začetna točka,čas,zahtevnost
 2804032,Oberfresen,1 h 25 min,lahka označena pot
 2804036,Oberfresen,2 h 15 min,"lahka označena pot, lahko brezpotje"
 2804037,Oberfresen,2 h 35 min,"lahka označena pot, lahko brezpotje"
+2804038,Oberfresen,2 h 55 min,"lahka označena pot, lahko brezpotje"
 280621,Waldheim Hütte,1 h,lahka označena pot
 280622,Waldheim Hütte,1 h 15 min,lahka označena pot
 280623,Waldheim Hütte,3 h 20 min,lahka označena pot
@@ -7086,6 +7090,7 @@ id,začetna točka,čas,zahtevnost
 303987,Gornji Grad,3 h 5 min,zahtevna označena pot
 303987,Gornji Grad,2 h 50 min,zahtevna označena pot
 304025,Golte,15 min,lahka označena pot
+304025,Atelsko sedlo,1 h 20 min,lahka označena pot
 30408,Planina Dol,1 h,lahka označena pot
 30408,Kraljev hrib,3 h,lahka označena pot
 30409,Planina Loka,15 min,lahka označena pot
@@ -7336,8 +7341,8 @@ id,začetna točka,čas,zahtevnost
 3085,Križe,6 h,zahtevna označena pot
 3085,Gozd,4 h 50 min,delno zahtevna označena pot
 3085,Bašelj,4 h 10 min,zahtevna označena pot
-3085,Tržiški graben,3 h 40 min,zahtevna označena pot
 3085,Zalog,4 h 35 min,lahka označena pot
+3085,Tržiški graben,3 h 40 min,zahtevna označena pot
 3085,Laško,4 h 30 min,zahtevna označena pot
 3085,Bašelj,5 h 5 min,zahtevna označena pot
 3085,Babni Vrt,4 h,"zahtevna neoznačena steza, zahtevna označena pot"
@@ -8237,8 +8242,8 @@ id,začetna točka,čas,zahtevnost
 40894,Ruška koča na Arehu,30 min,lahka označena pot
 40894,Ruše,3 h 15 min,lahka označena pot
 40894,Fram,4 h 30 min,lahka označena pot
-40894,Koča na Šumiku,1 h 55 min,lahka označena pot
 40894,Mariborska koča,1 h 40 min,lahka označena pot
+40894,Koča na Šumiku,1 h 55 min,lahka označena pot
 40894,Zgornja postaja vzpenjače,2 h 15 min,lahka označena pot
 40894,Šmartno na Pohorju,3 h 15 min,lahka označena pot
 40894,Sveti Trije kralji,2 h 45 min,lahka označena pot
@@ -8265,8 +8270,8 @@ id,začetna točka,čas,zahtevnost
 40917,Zgornja Polskava,4 h 30 min,lahka označena pot
 40917,Oplotnica,2 h 45 min,lahka označena pot
 40917,Kebelj,1 h 40 min,lahka označena pot
-40917,Koča na Šumiku,2 h 10 min,lahka označena pot
 40917,Zgornja Bistrica,3 h 20 min,lahka označena pot
+40917,Koča na Šumiku,2 h 10 min,lahka označena pot
 40917,Veliko Tinje,2 h 25 min,lahka neoznačena steza
 40917,Šmartno na Pohorju,2 h 15 min,lahka označena pot
 40917,Zgornja Bistrica,3 h 15 min,lahka označena pot

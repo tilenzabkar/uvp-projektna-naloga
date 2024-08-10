@@ -107,13 +107,13 @@ def izlusci_vrhove(directory):
         vzorec_ogledi = r'<div class="g2"><b>Ogledov:</b> ?(.+?)</div>'
         najdba_ogledi = re.search(vzorec_ogledi, vsebina)
         if najdba_ogledi is not None:
-            slovar_podatkov["število ogledov"] = najdba_ogledi.group(1)
+            slovar_podatkov["število ogledov"] = najdba_ogledi.group(1).replace(".", "")
         else:
             slovar_podatkov["število ogledov"] = None
             print(f"Število ogledov pri gori {gora} ni bilo najdeno.")
 
         #izluščimo priljubljenost
-        vzorec_priljubljenost = r'<div class="g2"><b>Priljubljenost:</b> (.+?)&nbsp;\((.+?)&nbsp;mesto\)</div>'
+        vzorec_priljubljenost = r'<div class="g2"><b>Priljubljenost:</b> (.+?)%&nbsp;\((.+?)&nbsp;mesto\)</div>'
         najdba_priljubljenost = re.search(vzorec_priljubljenost, vsebina)
         if najdba_priljubljenost is not None:
             slovar_podatkov["priljubljenost"] = najdba_priljubljenost.group(1)
