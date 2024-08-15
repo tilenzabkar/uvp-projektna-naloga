@@ -14,14 +14,14 @@ def besedilo_iz_datoteke(directory, filename):
 
 
 def izlusci_gore(directory, filename):
-    """Funkcija izlušči imena gorovij iz vsebine datoteke "filename" v direktoriju "directory" po vzorcu iz hribi.net."""
+    """Funkcija izlušči povezave do gorovij iz vsebine datoteke "filename" v direktoriju "directory" po vzorcu iz hribi.net."""
 
     vzorec = r'<tr class="naslov2"><td class="tdG0" colspan="2"><a href="(?P<link>.+?)"><b>.+?</b></a></td></tr>'
     return re.findall(vzorec, besedilo_iz_datoteke(directory, filename))
 
 
 def izlusci_id_drzav(directory, filename):
-    """Funkcija izlušči id držav iz datoteke "filename" iz direktorija "directory" in vrne seznam id-jev."""
+    """Funkcija izlušči id držav iz datoteke "filename" iz direktorija "directory" in vrne seznam naborov (id, ime)."""
 
     vzorec = r'<select name="drzavaid" class="select" onchange="prikazigorovja\(parseInt\(this.value\)\);">.+?</select>'
     najdba = re.search(vzorec, besedilo_iz_datoteke(directory, filename), flags=re.DOTALL)
@@ -32,7 +32,7 @@ def izlusci_id_drzav(directory, filename):
 
 
 def izlusci_vrhove(directory):
-    """Funkcija izlušči podatke iz datotek gora{id}.html, znotraj direktorijev znotraj glavenga direktorija."""
+    """Funkcija izlušči podatke iz datoteke gora{id}.html, znotraj direktorijev znotraj glavenga direktorija."""
 
     sez_podatkov = []
     pot = os.path.join(hribi_directory, directory)
@@ -47,6 +47,7 @@ def izlusci_vrhove(directory):
             ime = najdba_ime.group('ime')
             slovar_podatkov["ime"] = ime
         else:
+            slovar_podatkov["ime"] = None
             print(f"Ime pri gori {gora} ni najdeno.")
 
         # izluščimo id
@@ -146,24 +147,6 @@ def izlusci_vrhove(directory):
             slovar_podatkov["število poti"] = None
             print(f"Število poti pri gori {gora} ni bilo najdeno.")
 
-        # izluščimo število GPS sledi
-        vzorec_gps = r'<div class="g2"><b>Število GPS sledi:</b> <a class="moder" href="/gps.asp" title="GPS sledi">(.+?)</a></div>'
-        najdba_gps = re.search(vzorec_gps, vsebina)
-        if najdba_gps is not None:
-            slovar_podatkov["število GPS sledi"] = najdba_gps.group(1)
-        else:
-            slovar_podatkov["število GPS sledi"] = None
-            print(f"Število GPS poti pri gori {gora} ni bilo najdeno.")
-
-        # izluščimo opis
-        vzorec_opis = r'<div style="padding-top:10px;"><b>Opis.*?:</b><br />(.+?)</div>'
-        najdba_opis = re.search(vzorec_opis, vsebina, flags=re.DOTALL)
-        if najdba_opis is not None:
-            slovar_podatkov["opis"] = najdba_opis.group(1).replace("<br>", " ").replace("\n", "")
-        else:
-            slovar_podatkov["opis"] = None
-            print(f"Opis pri gori {gora} ni bil najdeno.")
-
         # izluščimo gore v okolici 2km
         vzorec_okolica = r'<div id="radiusseznam1">(.+?)</div>'
         najdba_okolica = re.search(vzorec_okolica, vsebina, flags=re.DOTALL)
@@ -181,7 +164,7 @@ def izlusci_vrhove(directory):
 
         # izluščimo začetne točke poti, čas hoje in zahtevnost
         vzorec_poti = (r'<tr class="trG\d"><td class="tdG"><a href=".+?"> ?(.+?) ?[-\(].+?</a></td><td class="tdG"><a href=".+?">'
-                        r' ?(.+?)</a></td><td class="tdG"><a href=".+?">(.+?)</a></td></tr>')
+                       r' ?(.+?)</a></td><td class="tdG"><a href=".+?">(.+?)</a></td></tr>')
         najdba_poti = re.findall(vzorec_poti, vsebina)
         if najdba_poti is not None:
             slovar_podatkov["poti"] = najdba_poti

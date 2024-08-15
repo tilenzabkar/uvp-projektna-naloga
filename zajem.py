@@ -10,7 +10,6 @@ hribi_url = (r'https://www.hribi.net/iskalnik_izletov/rezultat_iskanja?drzavaid=
              r'zahtevnostferrataid=&IzhodisceMinOddaljenost=&IzhodisceMAXOddaljenost=&'
              r'GoraMinOddaljenost=&GoraMaxOddaljenost=&mojaSirina=0&mojaDolzina=0')
 hribi_directory = 'podatki'
-hribi_frontpage_filename = 'gorovja.html'
 
 
 def besedilo_iz_url(url):
@@ -44,7 +43,7 @@ def shrani_stran(url, directory, filename):
     text = besedilo_iz_url(url)
     if text is not None:
         shrani_besedilo_v_datoteko(text, directory, filename)
-        print(f"Uspešno shranil {directory}\\{filename}")
+        print(f"Uspešno shranil {filename}")
 
 
 def besedilo_iz_datoteke(directory, filename):
@@ -57,8 +56,9 @@ def besedilo_iz_datoteke(directory, filename):
 
 
 def shrani_vse_drzave(directory, sez_id_in_imen_drzav):
-    """Funkcija shrani vsa gorovja vseh držav v direktorij "directory".
-    Sprejme tudi seznam podatkov o državah, da ga ni potrebno večkrat računati."""
+    """Funkcija shrani spletne strani vseh držav v direktorij "directory", ki
+    za naprej vsebujejo povezave do gor. Sprejme tudi seznam podatkov o državah, 
+    da ga ni potrebno večkrat računati."""
 
     for id, ime in sez_id_in_imen_drzav:
         ime_datoteke = ime.lower().replace(" ", "_") + ".html"
@@ -69,7 +69,7 @@ def shrani_vse_drzave(directory, sez_id_in_imen_drzav):
                      directory, ime_datoteke)
 
 
-def shrani_goro_iz_html(filename):
+def shrani_gore_za_drzavo(filename):
     """Funkcija ustvari direktorij "gore" znotraj direktorija "podatki" in
     vanj shrani vse gore v obliki gora{id}.html. Podatke dobi iz programa
     izlusci.py, ki izlusci povezave do gorovij iz glavne strani."""
@@ -84,14 +84,14 @@ def shrani_goro_iz_html(filename):
         shrani_stran(link, pot, ime_datoteke)
 
 
-def shrani_vse_gore(sez_id_in_imen_drzav):
+def shrani_gore_za_vse_drzave(sez_id_in_imen_drzav):
     """Funkcija z uporabo funkcije shrani_goro_iz_html(filename) shrani datoteke
     gor od vseh držav."""
 
     for id, ime in sez_id_in_imen_drzav:
         ime_datoteke = ime.lower().replace(" ", "_") + ".html"
         try:
-            shrani_goro_iz_html(ime_datoteke)
+            shrani_gore_za_drzavo(ime_datoteke)
         except FileNotFoundError:  # smo poskusili najti datoteko, za katero spletna stran ne obstaja in je zato nismo shranili
             print(f"Ni na voljo datoteke {ime_datoteke}.")
             continue
@@ -104,4 +104,4 @@ def zajemi_vse():
     shrani_stran(hribi_glavni_url, hribi_directory, "glavni.html")
     sez_id_in_imen_drzav = izlusci.izlusci_id_drzav(hribi_directory, "glavni.html")
     shrani_vse_drzave(hribi_directory, sez_id_in_imen_drzav)
-    shrani_vse_gore(sez_id_in_imen_drzav)
+    shrani_gore_za_vse_drzave(sez_id_in_imen_drzav)

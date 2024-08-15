@@ -19,8 +19,6 @@ def shrani(sez_podatkov):
                 "mesto na lestvici priljubljenosti",
                 "število slik",
                 "število poti",
-                "število GPS sledi",
-                "opis",
             ]
         )
 
@@ -40,8 +38,6 @@ def shrani(sez_podatkov):
                     podatek["lestvica priljubljenosti"],
                     podatek["število slik"],
                     podatek["število poti"],
-                    podatek["število GPS sledi"],
-                    podatek["opis"],
                 ]
             )
 
@@ -49,7 +45,7 @@ def shrani(sez_podatkov):
         pisatelj = csv.writer(dat)
         pisatelj.writerow(["id", "id soseda"])
         for podatek in sez_podatkov:
-            if podatek["gore v okolici 2km"]:
+            if podatek["gore v okolici 2km"] is not None:
                 for gora in podatek["gore v okolici 2km"]:
                     pisatelj.writerow([podatek["id"], gora])
 
@@ -57,6 +53,6 @@ def shrani(sez_podatkov):
         pisatelj = csv.writer(dat)
         pisatelj.writerow(["id", "začetna točka", "čas", "zahtevnost"])
         for podatek in sez_podatkov:
-            if podatek["poti"]:
+            if podatek["poti"] is not None:
                 for pot in podatek["poti"]:
                     pisatelj.writerow([podatek["id"], pot[0], pot[1], pot[2]])
