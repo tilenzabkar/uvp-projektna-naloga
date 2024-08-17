@@ -1,6 +1,6 @@
 # Analiza vrhov iz hribi.net
 
-Za projekt pri predmetu Uvod v programiranje sem si izbral analizo vrhov slovenskih in svetovnih gora in hribov, zbranih na spletni strani [Hribi.net](https://www.hribi.net/). Podatki so zbrani s pomočjo [iskalnika](https://www.hribi.net/iskalnik_izletov), kjer lahko izbereš državo in dobiš vse gore, ki so zbrane za to državo.
+Za projekt pri predmetu Uvod v programiranje sem si izbral analizo vrhov slovenskih in svetovnih gora in hribov, zbranih na spletni strani [Hribi.net](https://www.hribi.net/). Podatki so zbrani s pomočjo [iskalnika](https://www.hribi.net/iskalnik_izletov), kjer lahko izbereš državo in dobiš vse gore, ki so zbrane za to državo. Zbranih je 3318 vrhov in 9143 poti. 
 
 Za vsak vrh sem zajel:
 - ime,
@@ -23,9 +23,11 @@ Analiziral bom:
 - poti,
 - vplive na priljubljenost vrhov.
 
+Spletna stran www.hribi.net je verjetno najbolj znana in s podatki obogatena spletna stran s hribovsko tematiko v Sloveniji. Na strani, ki je zaživela marca 2006, je več kot 2.500 opisov vrhov in več kot 7.000 opisanih poti. Kar 90 odstotkov opisov sta prispevala ustanovitelja, brata Rok in Tadej Lukan. [Vir](https://siol.net/sportal/naj-planinska-koca/brata-sta-zasnovala-spletno-stran-ki-vsakodnevno-resuje-ljubitelje-slovenskih-gora-505574) za nadaljne branje.
+
 ## Navodila  za uporabo
 
-Uporabnik za pregled analize podatkov mora le odpreti dokument analiza.ipynb. 
+Uporabnik mora za pregled analize podatkov le odpreti dokument analiza.ipynb. Podatki so predstavljeni z Jupyter Notebook-om.
 
 Če hoče uporabnik sam zagnati program in si shraniti vse podatke, **zažene main.py**. Program main.py shrani spletne strani vseh držav in nato še vseh gora zbranih na pripadajočih spletnih straneh. Program potrebuje nekaj časa, da vse shrani. Potem, ko so podatki shranjeni, iz njih izlušči podatke o gorah za analizo in jih zapiše v csv datoteko. Ustvari tri csv datoteke, to so gore.csv, gore_poti.csv in gore_okolica.csv. Uporabnik si nato lahko ogleda analizo v analiza.ipynb. Če main.py ni bil zagnan, bodo uporabljene csv datoteke iz repozitorija.
 
