@@ -2,6 +2,9 @@ import csv
 
 
 def shrani(sez_podatkov):
+    """Funkcija shrani podatke iz danega seznama podatkov v csv datoteko.
+    Ustvari datoteke gore.csv, gore_okolica.csv in gore_poti.csv."""
+
     with open("gore.csv", "w", encoding="utf8") as dat:
         pisatelj = csv.writer(dat)
         pisatelj.writerow(
